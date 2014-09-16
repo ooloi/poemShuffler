@@ -1,0 +1,70 @@
+body{
+    background-color: rgba(11, 42, 47, 1);
+    display: inline-flex;
+}
+
+.hide{
+    display:none;
+}
+
+#wrap{
+    width: 180px;
+    margin-right: 20px;
+}
+
+canvas{
+    position: fixed;
+}
+
+div, p{
+    color: rgba(255, 255, 255, 1);
+    font-family: serif;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+}
+
+h1{
+    color: rgba(235, 220, 250, 1);
+    font-style: italic;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+a{
+    color: rgba(235, 220, 250, 1);
+}
+
+input[type=button]{
+    background-color: rgba(235, 220, 250, 0.8);
+    border-radius: 8px;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    width: 9em;
+    outline: none;
+    font-family: serif;
+    font-style: oblique;
+    font-size: 1em;
+}
+
+input[type=text]{
+    width: 2em;
+    border-radius: 0.8em;
+    outline: none;
+}
+
+textarea{
+    width: 15em;
+    height: 7em;
+    margin-top: 1em;
+    border-radius: 0.8em;
+    outline: none;
+}
+
+#output{
+    font-size: 1.13em;
+}
+
+#footer{
+    font-size: 0.9em;
+    margin-top: 10em;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Poem Shuffler</title>
+        <meta charset='utf-8'/>
+        <link rel='stylesheet' type='text/css' href='style.css'/>
+        <script type='text/javascript' src='poems.js'></script>
+        <script type='application/javascript' src='shuffle.js'></script>
+    </head>
+
+    <body>
+        <div id='wrap'>
+            <div id='choices'>
+                <h1>It's a tool! It's a toy! It's... Poem Shuffler!</h1>
+                <p>Click below to shuffle a random set of poems, select poems to shuffle, or enter and shuffle your own text.</p>
+                <input id='random' type='button' value='Random Shuffle'>
+                <input id='select' type='button' value='Select Poems'>
+                <input id='yourText' type='button' value='Use Your Own Text'>
+
+                <div id='addText' class='hide'>
+                    <p>By default, text will break into words and phrases randomly. To divide words/phrases manually, use a caret (^) to indicate breaks.</p>
+                    <p>To shuffle your text with other poems, click "Random Shuffle" or "Select Poems" above.</p>
+                    <textarea id='textInput' placeholder='Add text here'></textarea>
+                </div>
+
+                <div id='selection' class='hide'>
+                    <p>Select poems to shuffle below.</p>
+                    <p><input id='dickinson' type='checkbox'>XX by Emily Dickinson</p>
+                    <p><input id='eliot' type='checkbox'>"The Love Song of J. Alfred Prufrock" by T.S. Eliot</p>
+                    <p><input id='frost' type='checkbox'>"Fire and Ice" by Robert Frost</p>
+                    <p><input id='millay' type='checkbox'>"Spring" by Edna St. Vincent Millay</p>
+                    <p><input id='shelley' type='checkbox'>"Ozymandias" by Percy Bysshe Shelley</p>
+                    <p><input id='wordsworth' type='checkbox'>"We Are Seven" by William Wordsworth</p>
+                </div>
+
+                <div id='finish' class='hide'>
+                    <p>Deal <input id='deal' type='text'> words/phrases for a new shuffled poem. (Leave blank to use all.)</p>
+                    <p>Click "Submit" to start shuffling.</p>
+                    <input id='submit' type='button' value='Submit'>
+                </div>
+            </div>
+
+            <div id='output'></div>
+
+            <div id='final' class='hide'>
+                <p>Save the text of your shuffled poem? <input id='save' type='button' value='Save'><span id='downloader'></span></p>
+                <p>Shuffle again? <input id='repeat' type='button' value='Shuffle again'></p>
+            </div>
+
+            <div id='footer'>
+                <p>Poems included in this page are not under copyright in the United States of America. Copyrighted work submitted through "Use Your Own Text" is subject to applicable laws.</p>
+                <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <a rel="license"
+                     href="http://creativecommons.org/publicdomain/zero/1.0/">
+                    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" /></a>
+                <br />
+                To the extent possible under law,
+                <a rel="dct:publisher"
+                   href="https://github.com/ooloi/">
+                <span property="dct:title">Sari Krosinsky</span></a>
+                has waived all copyright and related or neighboring rights to
+                <span property="dct:title">Poem Shuffler source code</span>.
+                This work is published from:
+                <span property="vcard:Country" datatype="dct:ISO3166"
+                      content="US" about="https://github.com/ooloi/">
+                United States</span>.
+                </p>
+            </div>
+        </div>
+        
+        <canvas id='drawing' width='800' height='640'>Sorry! Your browser doesn't seem to support the HTML5 canvas element, but you can still deal a shuffled poem as text.</canvas>
+    </body>
+</html>
