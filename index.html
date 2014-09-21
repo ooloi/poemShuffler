@@ -9,47 +9,51 @@
     </head>
 
     <body>
-        <div id='wrap'>
+        <div id='wrapLeft'>
             <div id='choices'>
                 <h1>It's a tool! It's a toy! It's... Poem Shuffler!</h1>
-                <p>Click below to shuffle a random set of poems, select poems to shuffle, or enter and shuffle your own text.</p>
-                <input id='random' type='button' value='Random Shuffle'>
-                <input id='select' type='button' value='Select Poems'>
-                <input id='yourText' type='button' value='Use Your Own Text'>
+                <p>Click below to shuffle random poems, select poems to shuffle, or enter and shuffle your words.</p>
 
-                <div id='addText' class='hide'>
-                    <p>By default, text will break into words and phrases randomly. To divide words/phrases manually, use a caret (^) to indicate breaks.</p>
-                    <p>To shuffle your text with other poems, click "Random Shuffle" or "Select Poems" above.</p>
-                    <textarea id='textInput' placeholder='Add text here'></textarea>
+                <p>Deal up to <input type='text' value='30'> words/phrases from:</p>
+                <input type='button' value='Random Poems'>
+                <input type='button' value='Select Poems'>
+                <input type='button' value='Your Words'>
+
+                <div id='addText'>
+                    <p>By default, text breaks into words and phrases randomly. To divide words/phrases manually, use a caret (^) to indicate breaks.</p>
+                    <textarea placeholder='Add text here'></textarea>
+                    <p>To shuffle your words with other poems, click "Random Poems" or "Select Poems."</p>
                 </div>
 
-                <div id='selection' class='hide'>
-                    <p>Select poems to shuffle below.</p>
-                    <p><input id='dickinson' type='checkbox'>XX by Emily Dickinson</p>
-                    <p><input id='eliot' type='checkbox'>"The Love Song of J. Alfred Prufrock" by T.S. Eliot</p>
-                    <p><input id='frost' type='checkbox'>"Fire and Ice" by Robert Frost</p>
-                    <p><input id='millay' type='checkbox'>"Spring" by Edna St. Vincent Millay</p>
-                    <p><input id='shelley' type='checkbox'>"Ozymandias" by Percy Bysshe Shelley</p>
-                    <p><input id='wordsworth' type='checkbox'>"We Are Seven" by William Wordsworth</p>
+                <div id='selection'>
+                    <p>Select one or more poems to shuffle:</p>
+                    <p><input type='checkbox'>XX by Emily Dickinson</p>
+                    <p><input type='checkbox'>"The Love Song of J. Alfred Prufrock" by T.S. Eliot</p>
+                    <p><input type='checkbox'>"Fire and Ice" by Robert Frost</p>
+                    <p><input type='checkbox'>"Spring" by Edna St. Vincent Millay</p>
+                    <p><input type='checkbox'>"Ozymandias" by Percy Bysshe Shelley</p>
+                    <p><input type='checkbox'>"We Are Seven" by William Wordsworth</p>
                 </div>
 
-                <div id='finish' class='hide'>
-                    <p>Deal <input id='deal' type='text'> words/phrases for a new shuffled poem. (Leave blank to use all.)</p>
+                <div id='choose'>
                     <p>Click "Submit" to start shuffling.</p>
-                    <input id='submit' type='button' value='Submit'>
+                    <input type='button' value='Submit'>
                 </div>
             </div>
 
-            <div id='output'></div>
+            <div id='readout'></div>
 
-            <div id='final' class='hide'>
-                <p>Save the text of your shuffled poem? <input id='save' type='button' value='Save'><span id='downloader'></span></p>
-                <p>Shuffle again? <input id='repeat' type='button' value='Shuffle again'></p>
+            <div id='cigar'>
+                <p>Save the text of your shuffled poem? <input type='button' value='Save'><span id='downloader'></span></p>
+                <p>Shuffle again? <input type='button' value='Shuffle Again'></p>
             </div>
 
             <div id='footer'>
-                <p>Please suggest additional public domain poems to include and report bugs through <a href='https://github.com/ooloi/poemShuffler/issues/new'>Github</a>.</p>
-                <p>Poems included in this page are not under copyright in the United States of America. Copyrighted work submitted through "Use Your Own Text" is subject to applicable laws.</p>
+                <h2>Problems or Suggestions?</h2>
+                <p>Please report bugs and suggest public domain poems to add through <a href='https://github.com/ooloi/poemShuffler/issues/new'>Github</a>.</p>
+                <p>Poem Shuffler may not run on older browsers. Visit <a href='http://caniuse.com/#feat=queryselector'>"Can I use"</a> to learn whether your browser is supported. Some browsers that run Poem Shuffler may not support the <a href='http://caniuse.com/#feat=blobbuilder'>file saving</a> feature.</p>
+                <h2>Copyright Information</h2>
+                <p>Poems included in this page are not under copyright in the United States of America, but may be subject to copyright laws in other nations. Copyrighted work submitted through "Your Words" is subject to applicable laws.</p>
                 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
                 <a rel="license"
                      href="http://creativecommons.org/publicdomain/zero/1.0/">
@@ -69,6 +73,6 @@
             </div>
         </div>
         
-        <canvas id='drawing' width='800' height='640'>Sorry! Your browser doesn't seem to support the HTML5 canvas element, but you can still deal a shuffled poem as text.</canvas>
+        <!--<canvas id='drawing' width='800' height='640'>Sorry! Your browser doesn't seem to support the HTML5 canvas element, but you can still deal a shuffled poem as text.</canvas>-->
     </body>
 </html>

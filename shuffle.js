@@ -1,195 +1,250 @@
 //Poem Shuffler
 function launch(){
-
-//document elements
-var choices = document.getElementById('choices');
-var yourText = document.getElementById('yourText');
-var addText = document.getElementById('addText');
-var textInput = document.getElementById('textInput');
-var randomShuffle = document.getElementById('random');
-var select = document.getElementById('select');
-var selection = document.getElementById('selection');
-var finish = document.getElementById('finish');
-var deal = document.getElementById('deal');
-var submit = document.getElementById('submit');
-var output = document.getElementById('output');
-var final = document.getElementById('final');
-var repeat = document.getElementById('repeat');
-var saveBlob = document.getElementById('save');
-var dSpot = document.getElementById('downloader');
-
-//other global variables
-var r;
-var words = [];
-var temp;
-var randomize = false;
-var poemShuffle = [];
-var shuffledPoems = [];
-var shuffleTime;
-var fadeTime;
-
-//colors
-var textPalette = ['rgba(210, 185, 255, 1)', 'rgba(255, 216, 198, 1)', 'rgba(255, 248, 191, 1)', 'rgba(180, 255, 191, 1)', 'rgba(180, 214, 255, 1)', 'rgba(255, 209, 253, 1)'];
-
-//set up canvas
-var canvas = document.getElementById('drawing');
-if(canvas.getContext){
-    var ctx = canvas.getContext('2d');
-}
-ctx.fillStyle = 'rgba(11, 42, 47, 1)';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-//display hidden sections
-function unHide(object){
-    object.removeAttribute('class', 'hide');
-}
+    window.scrollTo(0, 0);
     
-//split string and add to words
-function splitter(string){
-    temp = string.split(' ');
-    for(i=0; i<temp.length; i+=r){
-        this.phrase = '';
-        r = 1 + Math.round(Math.random() * 3);
-        for(j=0; j<r; j++){
-            if(i+j<temp.length){
-                phrase = phrase.concat(temp[i+j], ' ');
-            }else{
-                phrase = temp[i];
+    //umbrella document elements
+    var wrapLeft = document.getElementById('wrapLeft');
+    var readout = document.getElementById('readout');
+
+    //word vessels
+    var deck = [];
+    var shuffledDeck = [];
+    var shuffledPoem = [];
+    var title = [];
+    
+    //numerical manipulators
+    var num = [];
+    var r;
+    
+    //timers
+    var shuffleTime;
+    
+    //set max words/phrases to deal
+    var howMany = wrapLeft.querySelector('input[type="text"]');
+    var dealCap;
+    function setCap(){
+        if(!howMany.value || isNaN(howMany.value)){
+            dealCap = 30;
+        }else{
+            dealCap = howMany.value;
+        }
+    }
+    
+    //create array of random, unique indexes
+    function indexArray(total, matchArray){
+        num = [];
+        var stop = Math.min(total, matchArray.length);
+        while(num.length < stop){
+            r = Math.round(Math.random() * (matchArray.length - 1));
+            if(num.indexOf(r) === -1){
+                num.push(r);
             }
         }
-        words = words.concat(phrase);
     }
-}
-
-//handle user text
-function addYours(){
-    temp = textInput.value.split('^');
-    if(temp.length>1){
-        words = words.concat(temp);
-    }else{
-        splitter(textInput.value);
-    }
-}
-
-//set number of words to return
-function dealer(){
-    if(isNaN(deal.value) || deal.value==''){
-        deal = words.length;
-    }else{
-        deal = deal.value;
-    }
-}
     
-//display random word/phrase, remove from words, add to poemShuffle
-function shuffle(){
-    if(deal>0){
-        r = Math.round(Math.random() * (words.length - 1));
-        output.insertAdjacentHTML('beforeend', words[r]+'<br>');
-        this.f = 20 + Math.round(Math.random() * 50);
-        ctx.font = f + 'px serif';
-        this.x = f/2 + Math.round(Math.random() * (canvas.width - f/2 * words[r].length));
-        this.y  = f + Math.round(Math.random() * (canvas.height - 2*f));
-        this.tC = Math.round(Math.random() * (textPalette.length - 1));
-        ctx.fillStyle = textPalette[tC];
-        ctx.fillText(words[r], x, y);
-        poemShuffle = poemShuffle.concat(words.splice(r, 1)+'\n');
-        deal--;
-    }else{
-        oneMoreThing();
+    //split poems into words
+    function splitter(string){
+        var words = string.split(' ');
+        var phrases = [];
+        var phrase = '';
+        for(var w = 0; w < words.length; w += r){
+            r = 1 + Math.round(Math.random() * 3);
+            for(var p = 0; p < r; p++){
+                if(w + p < words.length){
+                    phrase = phrase.concat(words[w + p], ' ');
+                }
+            }
+            phrases.push(phrase);
+            phrase = '';
+        }
+        deck.push(phrases);
     }
-}
-
-function fade(){
-    if(deal>0){
-        ctx.fillStyle = 'rgba(11, 42, 47, 0.01)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-}
     
-function oneMoreThing(){
-    clearInterval(shuffleTime);
-    clearInterval(fadeTime);
-    this.today = new Date();
-    final.insertAdjacentHTML('beforeend', '<p>Poem Shuffler dealt this round\'s words from: '+shuffledPoems+'.</p><p>'+today.toDateString()+'</p>');
-    unHide(final);
-    document.location = '#final';
-    poemShuffle = poemShuffle.concat('\nPoem Shuffler dealt this round\'s words from: '+shuffledPoems+'\n'+today.toDateString());
-}
-
-function saveFile(){
-    var poemBlob;
-    var link = document.createElement('a');
-    link.innerHTML = 'Download shuffled poem';
-    link.download = 'poemShuffler.txt';
-    poemBlob = new Blob(poemShuffle, {type:'text/plain'});
-    link.href = window.URL.createObjectURL(poemBlob);
-    dSpot.appendChild(link);
-}
-
-//select initial choice
-yourText.addEventListener('click', function(e){
-    unHide(addText);
-    unHide(finish);
-});
-select.addEventListener('click', function(e){
-    unHide(selection);
-    unHide(finish);
-});
-randomShuffle.addEventListener('click', function(e){
-    randomize = true;
-    unHide(finish);
-});
-
-//activate shuffle
-submit.addEventListener('click', function(e){
-    if(randomize){
-        for(p=0; p<poems.length; p++){
-            splitter(poems[p][1]);
-            shuffledPoems = shuffledPoems.concat(poems[p][0]);
+    //handle user text
+    var yourWords = false;
+    function splitYours(){
+        var yours = wrapLeft.querySelector('textarea');
+        if(yours.value){
+            yourWords = true;
+            title.push(' your words');
+            var yourSplit = yours.value.split('^');
+            if(yourSplit.length > 1){
+                deck.push(yourSplit);
+            }else{
+                splitter(yours.value);
+            }
+            dealCap -= deck[0].length;
         }
     }
-    if(document.getElementById('dickinson').checked){
-        splitter(dickinson[1]);
-        shuffledPoems = shuffledPoems.concat(dickinson[0]);
+    
+    //handle selected poems
+    var selection = document.getElementById('selection');
+    function splitSelected(){
+        var checkboxes = selection.querySelectorAll('input[type="checkbox"]');
+        var checks = [];
+        for(var c = 0; c < checkboxes.length; c++){
+            if(checkboxes[c].checked){
+                checks.push(c);
+            }
+        }
+        if(checks.length > 0){
+            for(var p = 0; p < checks.length; p++){
+                splitter(poems[checks[p]][1]);
+                title.push(poems[checks[p]][0]);
+            }
+        }
     }
-    if(document.getElementById('eliot').checked){
-        splitter(eliot[1]);
-        shuffledPoems = shuffledPoems.concat(eliot[0]);
+
+    //handle random poems
+    var maxPoems;
+    function splitRandom(){
+        maxPoems = Math.max(Math.min(poems.length, dealCap), 1);
+        indexArray(maxPoems, poems);
+        for(var n = 0; n < num.length; n++){
+            splitter(poems[num[n]][1]);
+            title.push(poems[num[n]][0]);
+        }
     }
-    if(document.getElementById('frost').checked){
-        splitter(frost[1]);
-        shuffledPoems = shuffledPoems.concat(frost[0]);
-    }
-    if(document.getElementById('millay').checked){
-        splitter(millay[1]);
-        shuffledPoems = shuffledPoems.concat(millay[0]);
-    }
-    if(document.getElementById('shelley').checked){
-        splitter(shelley[1]);
-        shuffledPoems = shuffledPoems.concat(shelley[0]);
-    }
-    if(document.getElementById('wordsworth').checked){
-        splitter(wordsworth[1]);
-        shuffledPoems = shuffledPoems.concat(wordsworth[0]);
-    }
-    if(textInput.value){
-        addYours();
-        shuffledPoems = shuffledPoems.concat(' your words');
+
+    //get random words balanced between poems
+    function shuffle(){
+        var start = 0;
+        if(yourWords){
+            start = 1;
+            for(var w = 0; w < deck[0].length; w++){
+                shuffledDeck.push(deck[0][w]);
+            }
+        }
+        var perPoem = Math.max(Math.min(dealCap/(deck.length - start), (deck.length - start)), 1);
+        for(var p = start; p < deck.length; p++){
+            indexArray(perPoem, deck[p]);
+            for(var n = 0; n < num.length; n++){
+                shuffledDeck.push(deck[p][num[n]]);
+            }
+        }
     }
     
-    choices.setAttribute('class', 'hide');
-    dealer();
-    shuffleTime = setInterval(shuffle, 1500);
-    fadeTime = setInterval(fade, 120);
-});
-
-saveBlob.addEventListener('click', function(e){
-    saveFile();
-    window.URL.revokeObjectURL(link);
-});
-
-repeat.addEventListener('click', function(e){
-    document.location.reload(true);
-});
+    //deal words from all included poems in random order
+    function deal(){
+        if(shuffledDeck.length > 0){
+            r = Math.round(Math.random() * (shuffledDeck.length - 1));
+            readout.insertAdjacentHTML('beforeend', shuffledDeck[r] + '<br>');
+            shuffledPoem.push(shuffledDeck.splice(r, 1) + '\n');
+        }else{
+            oneMoreThing();
+        }
+    }
+    
+    //after finished dealing
+    function oneMoreThing(){
+        clearInterval(shuffleTime);
+        var cigar = document.getElementById('cigar');
+        cigar.setAttribute('style', 'display:block');
+        var today = new Date();
+        cigar.insertAdjacentHTML('afterbegin', '<p>Poem Shuffler dealt words from: '+title+'.</p><p>'+today.toDateString()+'</p>');
+        document.location = '#cigar';
+        shuffledPoem.push('\nPoem Shuffler dealt words from: '+title+'\n'+today.toDateString());
+    }
+    
+    //save shuffled poem
+    var poemBlob;
+    var link;
+    function saveFile(){
+        link = document.createElement('a');
+        link.innerHTML = 'Download shuffled poem';
+        link.download = 'shuffledPoem.txt';
+        poemBlob = new Blob(shuffledPoem, {type:'text/plain'});
+        link.href = window.URL.createObjectURL(poemBlob);
+        document.getElementById('downloader').appendChild(link);
+    }
+    
+    //buttons
+    var buttons = wrapLeft.querySelectorAll('input[type="button"]');
+    var choose = document.getElementById('choose');
+    
+    //choose random poems
+    buttons[0].addEventListener('click', function(){
+        maxPoems = 1;
+        choose.setAttribute('style', 'display:block');
+        buttons[0].setAttribute('style', 'display:none');
+        buttons[1].setAttribute('style', 'display:none');
+        window.scrollTo(0, howMany.offsetTop);
+    }); 
+    
+    //choose selected poems 
+    buttons[1].addEventListener('click', function(){
+        selection.setAttribute('style', 'display:block');
+        choose.setAttribute('style', 'display:block');
+        buttons[0].setAttribute('style', 'display:none');
+        buttons[1].setAttribute('style', 'display:none');
+        if(buttons[2].getAttribute('style') === 'display:none'){
+            window.scrollTo(0, selection.offsetTop);
+        }else{
+            window.scrollTo(0, howMany.offsetTop);
+        }
+    });
+    
+    //add your words
+    buttons[2].addEventListener('click', function(){
+        document.getElementById('addText').setAttribute('style', 'display:block');
+        choose.setAttribute('style', 'display:block');
+        buttons[2].setAttribute('style', 'display:none');
+        window.scrollTo(0, howMany.offsetTop);
+    });
+    
+    //submit, shuffle, and deal
+    buttons[3].addEventListener('click', function(){
+        document.getElementById('choices').setAttribute('style', 'display:none');
+        setCap();
+        splitYours();
+        splitSelected();
+        if(maxPoems === 1){
+            splitRandom();
+        }
+        shuffle();
+        window.scrollTo(0, 0);
+        shuffleTime = setInterval(deal, 1500);
+    });
+    
+    //save shuffled poem
+    buttons[4].addEventListener('click', function(){
+        saveFile();
+    });
+    
+    //shuffle again
+    buttons[5].addEventListener('click', function(){
+        if(link){
+            window.URL.revokeObjectURL(link);
+        }
+        window.location.assign('index.html');
+    });
+    
+    //footer
+    var feet = wrapLeft.querySelectorAll('h2');
+    var toes = wrapLeft.querySelectorAll('#footer>p');
+    //show/hide problem/suggestion
+    feet[0].addEventListener('click', function(){
+        for(var t = 0; t < 2; t++){
+            if(toes[t].getAttribute('style') === 'display:none'
+              || !toes[t].getAttribute('style')){
+                toes[t].setAttribute('style', 'display:block');
+                window.scrollTo(0, feet[0].offsetTop);
+            }else{
+                toes[t].setAttribute('style', 'display:none');
+            }
+        }
+    });
+    //show/hide copyright
+    feet[1].addEventListener('click', function(){
+        for(var t = 2; t < toes.length; t++){
+            if(toes[t].getAttribute('style') === 'display:none'
+              || !toes[t].getAttribute('style')){
+                toes[t].setAttribute('style', 'display:block');
+                window.scrollTo(0, feet[1].offsetTop);
+            }else{
+                toes[t].setAttribute('style', 'display:none');
+            }
+        }
+    });
 }
 window.onload = launch;
