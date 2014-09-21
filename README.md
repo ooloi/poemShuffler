@@ -1,5 +1,7 @@
 It's a tool! It's a toy! It's... Poem Shuffler!
 
+See the live page here: http://ooloi.github.io/poemShuffler/
+
 Poetry Shuffler breaks poems into random words/phrases and returns them in a random order. You can add your own text, select from included public domain poems, and/or randomize everything.
 
 Please suggest additional public domain poems to include through Github.
