@@ -2,10 +2,49 @@
 function launch(){
     window.scrollTo(0, 0);
     
-    //umbrella document elements
+    //global painting elements
+    var wrapRight = document.getElementById('wrapRight');
+    var svgPrep = 'http://www.w3.org/2000/svg';
+    var svgPaint = document.getElementById('paintMe');
+    var svgW = wrapRight.clientWidth;
+    var svgH = wrapRight.clientHeight;
+    var textPalette = ['#d2b9ff', '#ffd8c6', '#fff8bf', '#b4ffbf', '#b4d6ff', '#ffd1fd'];
+
+    //paint first appearance of words
+    function paintWords(string){
+        var words = document.createElementNS(svgPrep, 'text');
+        var wordsShown = document.createTextNode(string);
+        var fSize = 20 + Math.round(Math.random() * 42);
+        words.setAttributeNS(null, 'font-size', fSize);
+        words.setAttributeNS(null, 'x', 0);
+        words.setAttributeNS(null, 'y', 0);
+        svgPaint.appendChild(words);
+        words.appendChild(wordsShown);
+        var tW = words.getComputedTextLength();
+        var x = Math.max(Math.round(Math.random() * (svgW - tW)), 0);
+        var y = Math.max(Math.round(Math.random() * (svgH - fSize)), fSize);
+        words.setAttributeNS(null, 'x', x);
+        words.setAttributeNS(null, 'y', y);
+        var cNum = Math.round(Math.random() * (textPalette.length - 1));
+        words.setAttributeNS(null, 'fill', textPalette[cNum]);
+    }
+    
+    //fade out
+    function fadeWords(){
+        var fade = document.createElementNS(svgPrep, 'rect');
+        fade.setAttributeNS(null, 'x', '0');
+        fade.setAttributeNS(null, 'y', '0');
+        fade.setAttributeNS(null, 'width', '100%');
+        fade.setAttributeNS(null, 'height', '100%');
+        fade.setAttributeNS(null, 'fill', '#000402');
+        fade.setAttributeNS(null, 'fill-opacity', '0.02');
+        svgPaint.appendChild(fade);
+    }
+    
+    //umbrellas for text elements
     var wrapLeft = document.getElementById('wrapLeft');
     var readout = document.getElementById('readout');
-
+    
     //word vessels
     var deck = [];
     var shuffledDeck = [];
@@ -18,6 +57,7 @@ function launch(){
     
     //timers
     var shuffleTime;
+    var fadeTime;
     
     //set max words/phrases to deal
     var howMany = wrapLeft.querySelector('input[type="text"]');
@@ -33,8 +73,8 @@ function launch(){
     //create array of random, unique indexes
     function indexArray(total, matchArray){
         num = [];
-        var stop = Math.min(total, matchArray.length);
-        while(num.length < stop){
+        var end = Math.min(total, matchArray.length);
+        while(num.length < end){
             r = Math.round(Math.random() * (matchArray.length - 1));
             if(num.indexOf(r) === -1){
                 num.push(r);
@@ -129,6 +169,7 @@ function launch(){
         if(shuffledDeck.length > 0){
             r = Math.round(Math.random() * (shuffledDeck.length - 1));
             readout.insertAdjacentHTML('beforeend', shuffledDeck[r] + '<br>');
+            paintWords(shuffledDeck[r]);
             shuffledPoem.push(shuffledDeck.splice(r, 1) + '\n');
         }else{
             oneMoreThing();
@@ -137,6 +178,7 @@ function launch(){
     
     //after finished dealing
     function oneMoreThing(){
+        clearInterval(fadeTime);
         clearInterval(shuffleTime);
         var cigar = document.getElementById('cigar');
         cigar.setAttribute('style', 'display:block');
@@ -204,6 +246,7 @@ function launch(){
         shuffle();
         window.scrollTo(0, 0);
         shuffleTime = setInterval(deal, 1500);
+        fadeTime = setInterval(fadeWords, 500);
     });
     
     //save shuffled poem
@@ -222,6 +265,7 @@ function launch(){
     //footer
     var feet = wrapLeft.querySelectorAll('h2');
     var toes = wrapLeft.querySelectorAll('#footer>p');
+    
     //show/hide problem/suggestion
     feet[0].addEventListener('click', function(){
         for(var t = 0; t < 2; t++){
@@ -234,6 +278,7 @@ function launch(){
             }
         }
     });
+    
     //show/hide copyright
     feet[1].addEventListener('click', function(){
         for(var t = 2; t < toes.length; t++){
