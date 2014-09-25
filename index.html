@@ -11,17 +11,20 @@
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        
+
           ga('create', 'UA-52706940-1', 'auto');
           ga('send', 'pageview');
-        
+
         </script>
     </head>
 
     <body>
         <div id='wrapLeft'>
             <div id='choices'>
-                <h1>It's a tool! It's a toy! It's... Poem Shuffler!</h1>
+                <h1>It's a tool!<br>
+                    It's a toy!<br>
+                    It's... Poem<br>
+                    Shuffler!</h1>
                 <p>Click below to shuffle random poems, select poems to shuffle, or enter and shuffle your words.</p>
 
                 <p>Deal up to <input type='text' value='30'> words/phrases from:</p>
@@ -54,8 +57,12 @@
             <div id='readout'></div>
 
             <div id='cigar'>
-                <p>Save the text of your shuffled poem? <input type='button' value='Save'><span id='downloader'></span></p>
-                <p>Shuffle again? <input type='button' value='Shuffle Again'></p>
+                <p>Save the text of your shuffled poem?</p>
+                <p><input type='button' value='Save'></p>
+                <p><span id='downloader'></span></p>
+                
+                <p>Shuffle again?</p>
+                <p><input type='button' value='Shuffle Again'></p>
             </div>
 
             <div id='footer'>
@@ -83,6 +90,17 @@
             </div>
         </div>
         
-        <!--<canvas id='drawing' width='800' height='640'>Sorry! Your browser doesn't seem to support the HTML5 canvas element, but you can still deal a shuffled poem as text.</canvas>-->
+        <div id='wrapRight'>
+            <svg id='paintMe' 
+                 version="1.1"
+                 baseProfile="full"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                 width='700' height='1000'>
+                <title>Animated Poem Shuffle</title>
+                <desc>Poem fragments appear in random colors, then fade. The same fragments  print as HTML text.</desc>
+            </svg>
+        </div>
     </body>
 </html>
