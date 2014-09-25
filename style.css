@@ -1,5 +1,5 @@
 body{
-    background-color: #000402;
+    background-color: #000603;
     display: inline-flex;
 }
 
@@ -28,7 +28,7 @@ div{
     margin-bottom: 0.5em;
 }
 
-#addText, #selection, #choose, #cigar, #footer>p{
+#stopper, #addText, #selection, #choose, #cigar, #footer>p{
     display: none;
 }
 
@@ -40,13 +40,13 @@ h1{
     text-align: center;
 }
 
-h2{
-    color: #ebdcfa;
-    font-size: 1.1em;
-}
-
 a{
     color: #ebdcfa;
+}
+
+a:focus, a:hover{
+    color: #ab9cba;
+    text-decoration-line: underline;
 }
 
 input[type=button]{
@@ -58,6 +58,10 @@ input[type=button]{
     font-family: serif;
     font-style: oblique;
     font-size: 1em;
+}
+
+input[type=button]:focus, input[type=button]:hover{
+    background-color: #ab9cba;
 }
 
 input[type=text]{

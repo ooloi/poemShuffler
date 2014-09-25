@@ -36,7 +36,7 @@ function launch(){
         fade.setAttributeNS(null, 'y', '0');
         fade.setAttributeNS(null, 'width', '100%');
         fade.setAttributeNS(null, 'height', '100%');
-        fade.setAttributeNS(null, 'fill', '#000402');
+        fade.setAttributeNS(null, 'fill', '#000603');
         fade.setAttributeNS(null, 'fill-opacity', '0.02');
         svgPaint.appendChild(fade);
     }
@@ -101,11 +101,10 @@ function launch(){
     }
     
     //handle user text
-    var yourWords = false;
+    var addYours = document.getElementById('addText');
     function splitYours(){
         var yours = wrapLeft.querySelector('textarea');
         if(yours.value){
-            yourWords = true;
             title.push(' your words');
             var yourSplit = yours.value.split('^');
             if(yourSplit.length > 1){
@@ -113,7 +112,15 @@ function launch(){
             }else{
                 splitter(yours.value);
             }
-            dealCap -= deck[0].length;
+            var prioritize = addYours.querySelector('input[type="checkbox"]');
+            if(prioritize.checked){
+                var stop = Math.min(dealCap, deck[0].length);
+                for(var w = 0; w < stop; w++){
+                    shuffledDeck.push(deck[0][w]);
+                }
+                dealCap -= deck[0].length;
+                deck.splice(0);
+            }
         }
     }
     
@@ -148,15 +155,8 @@ function launch(){
 
     //get random words balanced between poems
     function shuffle(){
-        var start = 0;
-        if(yourWords){
-            start = 1;
-            for(var w = 0; w < deck[0].length; w++){
-                shuffledDeck.push(deck[0][w]);
-            }
-        }
-        var perPoem = Math.max(Math.min(dealCap/(deck.length - start), (deck.length - start)), 1);
-        for(var p = start; p < deck.length; p++){
+        var perPoem = Math.max(dealCap/deck.length, 1);
+        for(var p = 0; p < deck.length; p++){
             indexArray(perPoem, deck[p]);
             for(var n = 0; n < num.length; n++){
                 shuffledDeck.push(deck[p][num[n]]);
@@ -180,6 +180,7 @@ function launch(){
     function oneMoreThing(){
         clearInterval(fadeTime);
         clearInterval(shuffleTime);
+        buttons[0].setAttribute('style', 'display:none');
         var cigar = document.getElementById('cigar');
         cigar.setAttribute('style', 'display:block');
         var today = new Date();
@@ -204,22 +205,27 @@ function launch(){
     var buttons = wrapLeft.querySelectorAll('input[type="button"]');
     var choose = document.getElementById('choose');
     
-    //choose random poems
+    //stop dealing
     buttons[0].addEventListener('click', function(){
+        oneMoreThing();
+    });
+    
+    //choose random poems
+    buttons[1].addEventListener('click', function(){
         maxPoems = 1;
         choose.setAttribute('style', 'display:block');
-        buttons[0].setAttribute('style', 'display:none');
         buttons[1].setAttribute('style', 'display:none');
+        buttons[2].setAttribute('style', 'display:none');
         window.scrollTo(0, howMany.offsetTop);
     }); 
     
     //choose selected poems 
-    buttons[1].addEventListener('click', function(){
+    buttons[2].addEventListener('click', function(){
         selection.setAttribute('style', 'display:block');
         choose.setAttribute('style', 'display:block');
-        buttons[0].setAttribute('style', 'display:none');
         buttons[1].setAttribute('style', 'display:none');
-        if(buttons[2].getAttribute('style') === 'display:none'){
+        buttons[2].setAttribute('style', 'display:none');
+        if(buttons[3].getAttribute('style') === 'display:none'){
             window.scrollTo(0, selection.offsetTop);
         }else{
             window.scrollTo(0, howMany.offsetTop);
@@ -227,35 +233,38 @@ function launch(){
     });
     
     //add your words
-    buttons[2].addEventListener('click', function(){
-        document.getElementById('addText').setAttribute('style', 'display:block');
+    buttons[3].addEventListener('click', function(){
+        addYours.setAttribute('style', 'display:block');
         choose.setAttribute('style', 'display:block');
-        buttons[2].setAttribute('style', 'display:none');
+        buttons[3].setAttribute('style', 'display:none');
         window.scrollTo(0, howMany.offsetTop);
     });
     
     //submit, shuffle, and deal
-    buttons[3].addEventListener('click', function(){
+    buttons[4].addEventListener('click', function(){
         document.getElementById('choices').setAttribute('style', 'display:none');
         setCap();
         splitYours();
-        splitSelected();
-        if(maxPoems === 1){
-            splitRandom();
+        if(dealCap > 0){
+            splitSelected();
+            if(maxPoems === 1){
+                splitRandom();
+            }
+            shuffle();
         }
-        shuffle();
         window.scrollTo(0, 0);
         shuffleTime = setInterval(deal, 1500);
-        fadeTime = setInterval(fadeWords, 500);
+        fadeTime = setInterval(fadeWords, 300);
+        buttons[0].setAttribute('style', 'display:block');
     });
     
     //save shuffled poem
-    buttons[4].addEventListener('click', function(){
+    buttons[5].addEventListener('click', function(){
         saveFile();
     });
     
     //shuffle again
-    buttons[5].addEventListener('click', function(){
+    buttons[6].addEventListener('click', function(){
         if(link){
             window.URL.revokeObjectURL(link);
         }
@@ -263,16 +272,15 @@ function launch(){
     });
     
     //footer
-    var feet = wrapLeft.querySelectorAll('h2');
     var toes = wrapLeft.querySelectorAll('#footer>p');
     
     //show/hide problem/suggestion
-    feet[0].addEventListener('click', function(){
+    buttons[7].addEventListener('click', function(){
         for(var t = 0; t < 2; t++){
             if(toes[t].getAttribute('style') === 'display:none'
-              || !toes[t].getAttribute('style')){
+              || !toes[t].getAttribute('style', 'display')){
                 toes[t].setAttribute('style', 'display:block');
-                window.scrollTo(0, feet[0].offsetTop);
+                window.scrollTo(0, buttons[7].offsetTop);
             }else{
                 toes[t].setAttribute('style', 'display:none');
             }
@@ -280,12 +288,12 @@ function launch(){
     });
     
     //show/hide copyright
-    feet[1].addEventListener('click', function(){
+    buttons[8].addEventListener('click', function(){
         for(var t = 2; t < toes.length; t++){
             if(toes[t].getAttribute('style') === 'display:none'
-              || !toes[t].getAttribute('style')){
+              || !toes[t].getAttribute('style', 'display')){
                 toes[t].setAttribute('style', 'display:block');
-                window.scrollTo(0, feet[1].offsetTop);
+                window.scrollTo(0, buttons[8].offsetTop);
             }else{
                 toes[t].setAttribute('style', 'display:none');
             }
