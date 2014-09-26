@@ -213,8 +213,12 @@ function launch(){
     
     //stop animating
     buttons[1].addEventListener('click', function(){
-        wrapRight.setAttribute('style', 'display:none');
-        buttons[1].setAttribute('style', 'display:none');
+        if(wrapRight.getAttribute('style') !== 'display:none'
+            || !wrapRight.getAttribute('style', 'display')){
+            wrapRight.setAttribute('style', 'display:none');
+        }else{
+            wrapRight.removeAttribute('style', 'display:none');
+        }
     });
     
     //choose random poems
