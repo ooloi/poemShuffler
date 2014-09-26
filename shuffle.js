@@ -180,7 +180,7 @@ function launch(){
     function oneMoreThing(){
         clearInterval(fadeTime);
         clearInterval(shuffleTime);
-        buttons[0].setAttribute('style', 'display:none');
+        stopper.setAttribute('style', 'display:none');
         var cigar = document.getElementById('cigar');
         cigar.setAttribute('style', 'display:block');
         var today = new Date();
@@ -203,6 +203,7 @@ function launch(){
     
     //buttons
     var buttons = wrapLeft.querySelectorAll('input[type="button"]');
+    var stopper = document.getElementById('stopper');
     var choose = document.getElementById('choose');
     
     //stop dealing
@@ -210,22 +211,28 @@ function launch(){
         oneMoreThing();
     });
     
-    //choose random poems
+    //stop animating
     buttons[1].addEventListener('click', function(){
+        wrapRight.setAttribute('style', 'display:none');
+        buttons[1].setAttribute('style', 'display:none');
+    });
+    
+    //choose random poems
+    buttons[2].addEventListener('click', function(){
         maxPoems = 1;
         choose.setAttribute('style', 'display:block');
-        buttons[1].setAttribute('style', 'display:none');
         buttons[2].setAttribute('style', 'display:none');
+        buttons[3].setAttribute('style', 'display:none');
         window.scrollTo(0, howMany.offsetTop);
     }); 
     
     //choose selected poems 
-    buttons[2].addEventListener('click', function(){
+    buttons[3].addEventListener('click', function(){
         selection.setAttribute('style', 'display:block');
         choose.setAttribute('style', 'display:block');
-        buttons[1].setAttribute('style', 'display:none');
         buttons[2].setAttribute('style', 'display:none');
-        if(buttons[3].getAttribute('style') === 'display:none'){
+        buttons[3].setAttribute('style', 'display:none');
+        if(buttons[4].getAttribute('style') === 'display:none'){
             window.scrollTo(0, selection.offsetTop);
         }else{
             window.scrollTo(0, howMany.offsetTop);
@@ -233,15 +240,15 @@ function launch(){
     });
     
     //add your words
-    buttons[3].addEventListener('click', function(){
+    buttons[4].addEventListener('click', function(){
         addYours.setAttribute('style', 'display:block');
         choose.setAttribute('style', 'display:block');
-        buttons[3].setAttribute('style', 'display:none');
+        buttons[4].setAttribute('style', 'display:none');
         window.scrollTo(0, howMany.offsetTop);
     });
     
     //submit, shuffle, and deal
-    buttons[4].addEventListener('click', function(){
+    buttons[5].addEventListener('click', function(){
         document.getElementById('choices').setAttribute('style', 'display:none');
         setCap();
         splitYours();
@@ -255,16 +262,16 @@ function launch(){
         window.scrollTo(0, 0);
         shuffleTime = setInterval(deal, 1500);
         fadeTime = setInterval(fadeWords, 300);
-        buttons[0].setAttribute('style', 'display:block');
+        stopper.setAttribute('style', 'display:block');
     });
     
     //save shuffled poem
-    buttons[5].addEventListener('click', function(){
+    buttons[6].addEventListener('click', function(){
         saveFile();
     });
     
     //shuffle again
-    buttons[6].addEventListener('click', function(){
+    buttons[7].addEventListener('click', function(){
         if(link){
             window.URL.revokeObjectURL(link);
         }
@@ -275,12 +282,12 @@ function launch(){
     var toes = wrapLeft.querySelectorAll('#footer>p');
     
     //show/hide problem/suggestion
-    buttons[7].addEventListener('click', function(){
+    buttons[8].addEventListener('click', function(){
         for(var t = 0; t < 2; t++){
             if(toes[t].getAttribute('style') === 'display:none'
               || !toes[t].getAttribute('style', 'display')){
                 toes[t].setAttribute('style', 'display:block');
-                window.scrollTo(0, buttons[7].offsetTop);
+                window.scrollTo(0, buttons[8].offsetTop);
             }else{
                 toes[t].setAttribute('style', 'display:none');
             }
@@ -288,12 +295,12 @@ function launch(){
     });
     
     //show/hide copyright
-    buttons[8].addEventListener('click', function(){
+    buttons[9].addEventListener('click', function(){
         for(var t = 2; t < toes.length; t++){
             if(toes[t].getAttribute('style') === 'display:none'
               || !toes[t].getAttribute('style', 'display')){
                 toes[t].setAttribute('style', 'display:block');
-                window.scrollTo(0, buttons[8].offsetTop);
+                window.scrollTo(0, buttons[9].offsetTop);
             }else{
                 toes[t].setAttribute('style', 'display:none');
             }

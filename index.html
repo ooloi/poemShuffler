@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en-US'>
     <head>
         <title>Poem Shuffler</title>
         <meta charset='utf-8'/>
@@ -10,7 +10,10 @@
 
     <body>
         <div id='wrapLeft'>
-            <input type='button' value='Stop Dealing Words' id='stopper'>
+            <div id='stopper'>
+                <input type='button' value='Stop Dealing Words' aria-pressed='false'>
+                <input type='button' value='Hide Animation' aria-pressed='false'>
+            </div>
             <div id='choices'>
                 <h1>It's a tool!<br>
                     It's a toy!<br>
@@ -18,30 +21,30 @@
                     Shuffler!</h1>
                 <p>Click below to shuffle random poems, select poems to shuffle, or enter and shuffle your words.</p>
 
-                <p>Deal <input type='text' value='30'> words/phrases from:</p>
-                <input type='button' value='Random Poems'>
-                <input type='button' value='Select Poems'>
-                <input type='button' value='Your Words'>
+                <p>Deal <input type='text' value='30' aria-multiline='false'> words/phrases from:</p>
+                <input type='button' value='Random Poems' aria-pressed='false'>
+                <input type='button' value='Select Poems' aria-pressed='false'>
+                <input type='button' value='Your Words' aria-pressed='false'>
 
                 <div id='addText'>
                     <p>By default, text breaks into words and phrases randomly. To divide words/phrases manually, use a caret (^) to indicate breaks.</p>
-                    <textarea placeholder='Add text here'></textarea>
-                    <p>To shuffle your words with other poems, click "Random Poems" or "Select Poems." Check here to make Poem Shuffler prioritize your words: <input type='checkbox'></p>
+                    <textarea placeholder='Add text here' aria-multiline='true'></textarea>
+                    <p>To shuffle your words with other poems, click "Random Poems" or "Select Poems." Check here to make Poem Shuffler prioritize your words: <input type='checkbox' aria-checked='false'></p>
                 </div>
 
                 <div id='selection'>
                     <p>Select one or more poems to shuffle:</p>
-                    <p><input type='checkbox'>XX by Emily Dickinson</p>
-                    <p><input type='checkbox'>"The Love Song of J. Alfred Prufrock" by T.S. Eliot</p>
-                    <p><input type='checkbox'>"Fire and Ice" by Robert Frost</p>
-                    <p><input type='checkbox'>"Spring" by Edna St. Vincent Millay</p>
-                    <p><input type='checkbox'>"Ozymandias" by Percy Bysshe Shelley</p>
-                    <p><input type='checkbox'>"We Are Seven" by William Wordsworth</p>
+                    <p><input type='checkbox' aria-checked='false'>XX by Emily Dickinson</p>
+                    <p><input type='checkbox' aria-checked='false'>"The Love Song of J. Alfred Prufrock" by T.S. Eliot</p>
+                    <p><input type='checkbox' aria-checked='false'>"Fire and Ice" by Robert Frost</p>
+                    <p><input type='checkbox' aria-checked='false'>"Spring" by Edna St. Vincent Millay</p>
+                    <p><input type='checkbox' aria-checked='false'>"Ozymandias" by Percy Bysshe Shelley</p>
+                    <p><input type='checkbox' aria-checked='false'>"We Are Seven" by William Wordsworth</p>
                 </div>
 
                 <div id='choose'>
                     <p>Click "Submit" to start shuffling.</p>
-                    <input type='button' value='Submit'>
+                    <input type='button' value='Submit' aria-pressed='false'>
                 </div>
             </div>
 
@@ -49,18 +52,18 @@
 
             <div id='cigar'>
                 <p>Save the text of your shuffled poem?</p>
-                <input type='button' value='Save'>
+                <input type='button' value='Save' aria-pressed='false'>
                 <p><span id='downloader'></span></p>
                 
                 <p>Shuffle again?</p>
-                <p><input type='button' value='Shuffle Again'></p>
+                <input type='button' value='Shuffle Again' aria-pressed='false'>
             </div>
 
             <div id='footer'>
-                <input type='button' value='Problems or Suggestions?'>
+                <input type='button' value='Problems or Suggestions?' aria-pressed='false'>
                 <p>Please report bugs and suggest public domain poems to add through <a href='https://github.com/ooloi/poemShuffler/issues/new'>Github</a>.</p>
                 <p>Poem Shuffler may not run on older browsers. Visit <a href='http://caniuse.com/#feat=queryselector'>"Can I use"</a> to learn whether your browser is supported. Some browsers that run Poem Shuffler may not support the <a href='http://caniuse.com/#feat=blobbuilder'>file saving</a> feature.</p>
-                <input type='button' value='Copyright Information'>
+                <input type='button' value='Copyright Information' aria-pressed='false'>
                 <p>Poems included in this page are not under copyright in the United States of America, but may be subject to copyright laws in other nations. Copyrighted work submitted through "Your Words" is subject to applicable laws.</p>
                 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
                 <a rel="license"
